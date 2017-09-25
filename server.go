@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"expvar"
 
 	"fmt"
 
@@ -13,6 +14,10 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus"
 )
+
+func expvarHandler() http.Handler {
+	return expvar.Handler()
+}
 
 func prometheusHandler() http.Handler {
 	return prometheus.Handler()
@@ -62,6 +67,7 @@ func main() {
 	}, []string{"code"})
 
 	r := mux.NewRouter()
+	r.Handle("/debug/vars", expvarHandler())
 	r.Handle("/metrics", prometheusHandler())
 	r.Handle("/hash", hashHandler(histogram))
 

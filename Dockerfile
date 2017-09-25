@@ -1,4 +1,4 @@
-FROM golang:1.7.4
+FROM golang:1.8
 RUN mkdir -p /go/src/github.com/alexellis/hash-browns/
 WORKDIR /go/src/github.com/alexellis/hash-browns/
 
